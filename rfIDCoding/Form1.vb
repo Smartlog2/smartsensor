@@ -1,4 +1,5 @@
 ﻿Imports System.Security.Cryptography
+
 Public Class Form1
     Public Class AESCrypter
 
@@ -50,13 +51,12 @@ Public Class Form1
 
     End Class
 
-
-
-
+   
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         For Each sp As String In My.Computer.Ports.SerialPortNames
             ListBox1.Items.Add(sp)
         Next
+        
 
         DateTimePickerAlarm.Format = DateTimePickerFormat.Time
         LabelAlarmDate.Text = "Alarm date = " + DateTimePickerAlarm.Value.ToLocalTime.ToString
@@ -124,7 +124,7 @@ Public Class Form1
 
         Dim EncryptionID, EncryptionAlarmdate, EncryptionEndoflife As String
 
-        Dim R(15) As String
+        Dim R(24) As String
         LabelTerminal.BackColor = Color.Orange
         LabelTerminal.Text = "Writing tag ..."
 
@@ -177,6 +177,10 @@ Public Class Form1
                 End If
                 ProgressBar1.Value += 1
             Next
+
+            For i = 16 To 23
+                If i < 10 Then R(i) = RFID("r0" & i) Else If i <= &HF Then R(i) = RFID("r0" & Chr(i + 55)) Else R(i) = RFID("r" & Hex(i))
+            Next
             Application.DoEvents()
 
             Dim mycom As String
@@ -221,6 +225,52 @@ Public Class Form1
                 ProgressBar1.Value += 1
                 i += 1
             Loop While i < 16 And Not myError
+
+            'writing alarm date ascii
+            i = 16
+            Do
+
+                mydata = Microsoft.VisualBasic.Mid(LabelAlarmDateFrame.Text & "00", 1 + ((i - 16) * 8), 8)
+                mydata = mydata + Microsoft.VisualBasic.Right(R(i), 25)
+                If i < 10 Then
+                    mycom = "w0" & i
+                Else
+                    If i <= &HF Then
+                        mycom = "w0" & Chr(i + 55)
+                    Else
+                        mycom = "w" & Hex(i)
+                    End If
+                End If
+
+                If RFID(mycom + mydata) = mydata Then myError = False Else myError = True
+                ProgressBar1.Value += 1
+                i += 1
+            Loop While i < 18 And Not myError
+
+            'writing end of life date ascii
+            i = 20
+            Do
+
+                mydata = Microsoft.VisualBasic.Mid(LabelEndoflifeDateFrame.Text & "00", 1 + ((i - 20) * 8), 8)
+                mydata = mydata + Microsoft.VisualBasic.Right(R(i), 25)
+                If i < 10 Then
+                    mycom = "w0" & i
+                Else
+                    If i <= &HF Then
+                        mycom = "w0" & Chr(i + 55)
+                    Else
+                        mycom = "w" & Hex(i)
+                    End If
+                End If
+
+                If RFID(mycom + mydata) = mydata Then myError = False Else myError = True
+                ProgressBar1.Value += 1
+                i += 1
+            Loop While i < 22 And Not myError
+
+
+
+
             Application.DoEvents()
             If myError Then
                 LabelTerminal.Text = "Writing Tag NOK"
@@ -333,6 +383,9 @@ Public Class Form1
         LabelReg4.Text = ""
         LabelReg8.Text = ""
         LabelReg12.Text = ""
+        LabelReg16.Text = ""
+        LabelReg20.Text = ""
+
         LabelAlamDateDecrypted.Text = ""
         LabelEndoflifeDateDecrypted.Text = ""
 
@@ -347,6 +400,11 @@ Public Class Form1
         If LabelReg8.Text.Length < 10 Then myerror = True
         LabelReg12.Text = RFID("r0C")
         If LabelReg12.Text.Length < 10 Then myerror = True
+        LabelReg16.Text = RFID("r10")
+        If LabelReg16.Text.Length < 10 Then myerror = True
+        LabelReg20.Text = RFID("r14")
+        If LabelReg20.Text.Length < 10 Then myerror = True
+
         LabelAlamDateDecrypted.Text = timestamp(DoDecryption(LabelReg8.Text))
         LabelEndoflifeDateDecrypted.Text = timestamp(DoDecryption(LabelReg12.Text))
 
@@ -376,7 +434,7 @@ Public Class Form1
 
     Private Sub ButtonClearAll_Click(sender As Object, e As EventArgs) Handles ButtonClearAll.Click
         Dim i As Integer
-        Dim R(15) As String
+        Dim R(24) As String
         Dim mycom As String
         Dim err As Boolean
         LabelTerminal.Text = "Clearing all the registers..."
@@ -386,12 +444,12 @@ Public Class Form1
         ProgressBar1.Value = 1
         Application.DoEvents()
         'Reading the registers from 4 to 15 
-        For i = 4 To 15
-            If i < 10 Then R(i) = RFID("r0" & i) Else R(i) = RFID("r0" & Chr(i + 55))
+        For i = 4 To 24
+            If i < 10 Then R(i) = RFID("r0" & i) Else If i <= &HF Then R(i) = RFID("r0" & Chr(i + 55)) Else R(i) = RFID("r" & Hex(i))
             ProgressBar1.Value += 1
         Next
-        For i = 4 To 15
-            If i < 10 Then mycom = "w0" & i Else mycom = "w0" & Chr(i + 55)
+        For i = 4 To 24
+            If i < 10 Then mycom = "w0" & i Else If i <= &HF Then mycom = "w0" & Chr(i + 55) Else mycom = "w" & Hex(i)
             If RFID(mycom & "00000000" & Microsoft.VisualBasic.Right(R(i), 25)) = "00000000" & Microsoft.VisualBasic.Right(R(i), 25) Then err = False Else err = True
             ProgressBar1.Value += 1
         Next
@@ -420,6 +478,134 @@ Public Class Form1
         + " " + Microsoft.VisualBasic.Mid(mydata, 9, 2) + ":" + Microsoft.VisualBasic.Mid(mydata, 11, 2) + ":" + Microsoft.VisualBasic.Mid(mydata, 13, 2)
         Return mytimestamp
     End Function
+
+    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
+        MsgBox(ListBox1.SelectedItem)
+
+    End Sub
+
+    Private Sub ProgressBar1_Click(sender As Object, e As EventArgs) Handles ProgressBar1.Click
+
+    End Sub
+
+    
+    Private Sub ButtonModbus_Click(sender As Object, e As EventArgs) Handles ButtonModbus.Click
+        Dim Result As WSMBS.Result
+        WsmbsControl1.Mode = WSMBS.Mode.RTU      'Use standard Modbus RTU
+        WsmbsControl1.PortName = "COM8"
+        WsmbsControl1.BaudRate = 9600
+        WsmbsControl1.StopBits = 1
+        WsmbsControl1.Parity = WSMBS.Parity.None
+        WsmbsControl1.ResponseTimeout = 1000   '1000ms
+        Result = WsmbsControl1.Open()
+        If Result <> WSMBS.Result.SUCCESS Then
+            MessageBox.Show(WsmbsControl1.GetLastErrorString())
+        End If
+    End Sub
+
+    Private Sub Button1_Click_2(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub ReadInputRegisters_Click(sender As Object, e As EventArgs) Handles ReadInputRegistersRTC.Click
+        LabelRTC.Text = Dates(0)
+    End Sub
+
+    Private Function Dates(ByVal kind As Integer) As String
+
+        Dim DataString As String = ""
+        Dim str As String = ""
+        Dim sec, hour, min, day, month, year As String
+        Dim Registers(5) As Short
+        Dim Result As WSMBS.Result
+        Dim myResult As String
+
+        Result = WsmbsControl1.ReadInputRegisters(1, kind, 6, Registers)
+        If (Result = WSMBS.Result.SUCCESS) Then
+            sec = Registers(0).ToString("00")
+            min = Registers(1).ToString("00")
+            hour = Registers(2).ToString("00")
+            day = Registers(3).ToString("00")
+            month = Registers(4).ToString("00")
+            year = Registers(5).ToString("00")
+
+            myResult = day & "/" & month & "/" & year & "  " & hour & ":" & min & ":" & sec
+
+        Else
+            MessageBox.Show(WsmbsControl1.GetLastErrorString())
+        End If
+        Return myResult
+    End Function
+
+    Private Sub ReadInputRegistersAlarm_Click(sender As Object, e As EventArgs) Handles ReadInputRegistersAlarm.Click
+
+        LabelAlarm.Text = Dates(6)
+    End Sub
+
+    Private Sub Button1_Click_3(sender As Object, e As EventArgs) Handles Button1.Click
+        LabelEndoflive.Text = Dates(12)
+    End Sub
+
+    Private Sub ButtonTimeSynchrone_Click(sender As Object, e As EventArgs) Handles ButtonTimeSynchrone.Click
+        Dim Registers(6) As Short
+        Dim i As Integer
+        Dim Result As WSMBS.Result
+        Registers(0) = Now.Second
+        Registers(1) = Now.Minute
+        Registers(2) = Now.Hour
+        Registers(3) = Now.DayOfWeek
+        Registers(4) = Now.Day
+        Registers(5) = Now.Month
+        Registers(6) = Val(Now.Year.ToString().Substring(2, 2))
+
+
+
+        Result = WsmbsControl1.WriteMultipleRegisters(1, 0, 7, Registers)
+        If (Result <> WSMBS.Result.SUCCESS) Then
+            MessageBox.Show(WsmbsControl1.GetLastErrorString())
+        End If
+    End Sub
+
+    Private Sub GroupBox3_Enter(sender As Object, e As EventArgs) Handles GroupBox3.Enter
+
+    End Sub
+
+    Private Sub ButtonWritealarm_Click(sender As Object, e As EventArgs) Handles ButtonWritealarm.Click
+        Dim EncryptionID, EncryptionAlarmdate, EncryptionEndoflife As String
+
+        'Alarm date encryption
+        EncryptionAlarmdate = DoEncryption(LabelAlarmDateFrame.Text)
+        LabelAESAlarmDate.Text = EncryptionAlarmdate
+        ProgressBar1.Value += 1
+
+        'End of life date encryption
+        EncryptionEndoflife = DoEncryption(LabelEndoflifeDateFrame.Text)
+        LabelAESEndoflifeDate.Text = EncryptionEndoflife
+        ProgressBar1.Value += 1
+
+
+        Dim Result As WSMBS.Result
+        Dim Registers(15) As Short
+        Dim t As Integer
+        
+        Dim hexString As String = LabelAESAlarmDate.Text
+
+
+       
+
+
+        For t = 0 To 15
+            Registers(t) = Convert.ToByte(hexString.Substring(t * 2, 2), 16)
+        Next
+
+
+
+
+        Result = WsmbsControl1.WriteMultipleRegisters(1, 7, 16, Registers)
+        If (Result <> WSMBS.Result.SUCCESS) Then
+            MessageBox.Show(WsmbsControl1.GetLastErrorString())
+        End If
+    End Sub
 End Class
 
 

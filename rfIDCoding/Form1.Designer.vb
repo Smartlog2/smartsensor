@@ -25,7 +25,6 @@ Partial Class Form1
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.ListBox1 = New System.Windows.Forms.ListBox()
-        Me.WsmbsControl1 = New WSMBS.WSMBSControl(Me.components)
         Me.LabelTerminal = New System.Windows.Forms.Label()
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.ButtonCodeTag = New System.Windows.Forms.Button()
@@ -34,6 +33,8 @@ Partial Class Form1
         Me.LabelAESrfiID = New System.Windows.Forms.Label()
         Me.LabelTagID = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.DateTimePickerEndofLife = New System.Windows.Forms.DateTimePicker()
         Me.DateTimePickerAlarm = New System.Windows.Forms.DateTimePicker()
         Me.LabelEndofLife = New System.Windows.Forms.Label()
@@ -48,49 +49,51 @@ Partial Class Form1
         Me.LabelReg12 = New System.Windows.Forms.Label()
         Me.ButtonClearAll = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.LabelReg20 = New System.Windows.Forms.Label()
+        Me.LabelReg16 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.LabelEndoflifeDateDecrypted = New System.Windows.Forms.Label()
+        Me.LabelAlamDateDecrypted = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.LabelAlamDateDecrypted = New System.Windows.Forms.Label()
-        Me.LabelEndoflifeDateDecrypted = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.ButtonModbus = New System.Windows.Forms.Button()
+        Me.ReadInputRegistersRTC = New System.Windows.Forms.Button()
+        Me.LabelRTC = New System.Windows.Forms.Label()
+        Me.LabelAlarm = New System.Windows.Forms.Label()
+        Me.ReadInputRegistersAlarm = New System.Windows.Forms.Button()
+        Me.LabelEndoflive = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.WsmbsControl1 = New WSMBS.WSMBSControl(Me.components)
+        Me.ButtonTimeSynchrone = New System.Windows.Forms.Button()
+        Me.ButtonWritealarm = New System.Windows.Forms.Button()
         Me.GroupBox2.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
         Me.SuspendLayout()
         '
         'ListBox1
         '
         Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.Location = New System.Drawing.Point(412, 202)
+        Me.ListBox1.Location = New System.Drawing.Point(6, 19)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(165, 30)
+        Me.ListBox1.Size = New System.Drawing.Size(82, 17)
         Me.ListBox1.TabIndex = 3
-        '
-        'WsmbsControl1
-        '
-        Me.WsmbsControl1.BaudRate = 9600
-        Me.WsmbsControl1.DTREnable = False
-        Me.WsmbsControl1.Mode = WSMBS.Mode.RTU
-        Me.WsmbsControl1.Parity = WSMBS.Parity.None
-        Me.WsmbsControl1.PortName = "COM1"
-        Me.WsmbsControl1.RemoveEcho = False
-        Me.WsmbsControl1.ResponseTimeout = 1000
-        Me.WsmbsControl1.RTSEnable = False
-        Me.WsmbsControl1.StopBits = 1
         '
         'LabelTerminal
         '
         Me.LabelTerminal.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.LabelTerminal.Location = New System.Drawing.Point(15, 319)
+        Me.LabelTerminal.Location = New System.Drawing.Point(3, 538)
         Me.LabelTerminal.Name = "LabelTerminal"
         Me.LabelTerminal.Size = New System.Drawing.Size(943, 25)
         Me.LabelTerminal.TabIndex = 6
@@ -111,9 +114,9 @@ Partial Class Form1
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(15, 347)
+        Me.ProgressBar1.Location = New System.Drawing.Point(3, 566)
         Me.ProgressBar1.MarqueeAnimationSpeed = 1
-        Me.ProgressBar1.Maximum = 27
+        Me.ProgressBar1.Maximum = 60
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(946, 18)
         Me.ProgressBar1.Step = 1
@@ -161,6 +164,24 @@ Partial Class Form1
         Me.GroupBox2.TabIndex = 39
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "TAG Life Time"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(20, 61)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(58, 13)
+        Me.Label6.TabIndex = 43
+        Me.Label6.Text = "End of Life"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(20, 32)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(59, 13)
+        Me.Label5.TabIndex = 42
+        Me.Label5.Text = "Alarm Date"
         '
         'DateTimePickerEndofLife
         '
@@ -236,7 +257,7 @@ Partial Class Form1
         '
         Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(636, 190)
+        Me.PictureBox1.Location = New System.Drawing.Point(35, 399)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(319, 109)
         Me.PictureBox1.TabIndex = 40
@@ -280,6 +301,10 @@ Partial Class Form1
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.Label12)
+        Me.GroupBox3.Controls.Add(Me.Label11)
+        Me.GroupBox3.Controls.Add(Me.LabelReg20)
+        Me.GroupBox3.Controls.Add(Me.LabelReg16)
         Me.GroupBox3.Controls.Add(Me.GroupBox1)
         Me.GroupBox3.Controls.Add(Me.Label4)
         Me.GroupBox3.Controls.Add(Me.Label3)
@@ -291,10 +316,95 @@ Partial Class Form1
         Me.GroupBox3.Controls.Add(Me.LabelReg4)
         Me.GroupBox3.Location = New System.Drawing.Point(516, 12)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(439, 172)
+        Me.GroupBox3.Size = New System.Drawing.Size(439, 309)
         Me.GroupBox3.TabIndex = 46
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Tag Registers"
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(243, 205)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(27, 13)
+        Me.Label12.TabIndex = 56
+        Me.Label12.Text = "R14"
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(243, 166)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(27, 13)
+        Me.Label11.TabIndex = 55
+        Me.Label11.Text = "R10"
+        '
+        'LabelReg20
+        '
+        Me.LabelReg20.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelReg20.Location = New System.Drawing.Point(15, 203)
+        Me.LabelReg20.Name = "LabelReg20"
+        Me.LabelReg20.Size = New System.Drawing.Size(222, 22)
+        Me.LabelReg20.TabIndex = 54
+        Me.LabelReg20.Text = " "
+        '
+        'LabelReg16
+        '
+        Me.LabelReg16.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelReg16.Location = New System.Drawing.Point(15, 165)
+        Me.LabelReg16.Name = "LabelReg16"
+        Me.LabelReg16.Size = New System.Drawing.Size(222, 22)
+        Me.LabelReg16.TabIndex = 53
+        Me.LabelReg16.Text = " "
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.Label8)
+        Me.GroupBox1.Controls.Add(Me.Label7)
+        Me.GroupBox1.Controls.Add(Me.LabelEndoflifeDateDecrypted)
+        Me.GroupBox1.Controls.Add(Me.LabelAlamDateDecrypted)
+        Me.GroupBox1.Location = New System.Drawing.Point(289, 35)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(144, 109)
+        Me.GroupBox1.TabIndex = 52
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "AES decrypted"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(6, 59)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(58, 13)
+        Me.Label8.TabIndex = 51
+        Me.Label8.Text = "End of Life"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(6, 16)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(59, 13)
+        Me.Label7.TabIndex = 50
+        Me.Label7.Text = "Alarm Date"
+        '
+        'LabelEndoflifeDateDecrypted
+        '
+        Me.LabelEndoflifeDateDecrypted.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelEndoflifeDateDecrypted.Location = New System.Drawing.Point(7, 72)
+        Me.LabelEndoflifeDateDecrypted.Name = "LabelEndoflifeDateDecrypted"
+        Me.LabelEndoflifeDateDecrypted.Size = New System.Drawing.Size(125, 22)
+        Me.LabelEndoflifeDateDecrypted.TabIndex = 49
+        Me.LabelEndoflifeDateDecrypted.Text = " "
+        '
+        'LabelAlamDateDecrypted
+        '
+        Me.LabelAlamDateDecrypted.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelAlamDateDecrypted.Location = New System.Drawing.Point(6, 36)
+        Me.LabelAlamDateDecrypted.Name = "LabelAlamDateDecrypted"
+        Me.LabelAlamDateDecrypted.Size = New System.Drawing.Size(125, 22)
+        Me.LabelAlamDateDecrypted.TabIndex = 48
+        Me.LabelAlamDateDecrypted.Text = " "
         '
         'Label4
         '
@@ -303,7 +413,7 @@ Partial Class Form1
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(28, 13)
         Me.Label4.TabIndex = 47
-        Me.Label4.Text = "R0A"
+        Me.Label4.Text = "R0C"
         '
         'Label3
         '
@@ -346,78 +456,124 @@ Partial Class Form1
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "AES encryption"
         '
-        'Label5
+        'GroupBox5
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(20, 32)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(59, 13)
-        Me.Label5.TabIndex = 42
-        Me.Label5.Text = "Alarm Date"
+        Me.GroupBox5.Controls.Add(Me.ListBox1)
+        Me.GroupBox5.Location = New System.Drawing.Point(407, 194)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(103, 48)
+        Me.GroupBox5.TabIndex = 48
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Serial Port"
         '
-        'Label6
+        'ButtonModbus
         '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(20, 61)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(58, 13)
-        Me.Label6.TabIndex = 43
-        Me.Label6.Text = "End of Life"
+        Me.ButtonModbus.Location = New System.Drawing.Point(513, 333)
+        Me.ButtonModbus.Name = "ButtonModbus"
+        Me.ButtonModbus.Size = New System.Drawing.Size(266, 32)
+        Me.ButtonModbus.TabIndex = 50
+        Me.ButtonModbus.Text = "Modbus Connect"
+        Me.ButtonModbus.UseVisualStyleBackColor = True
         '
-        'LabelAlamDateDecrypted
+        'ReadInputRegistersRTC
         '
-        Me.LabelAlamDateDecrypted.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.LabelAlamDateDecrypted.Location = New System.Drawing.Point(6, 36)
-        Me.LabelAlamDateDecrypted.Name = "LabelAlamDateDecrypted"
-        Me.LabelAlamDateDecrypted.Size = New System.Drawing.Size(125, 22)
-        Me.LabelAlamDateDecrypted.TabIndex = 48
-        Me.LabelAlamDateDecrypted.Text = " "
+        Me.ReadInputRegistersRTC.Location = New System.Drawing.Point(370, 399)
+        Me.ReadInputRegistersRTC.Name = "ReadInputRegistersRTC"
+        Me.ReadInputRegistersRTC.Size = New System.Drawing.Size(179, 23)
+        Me.ReadInputRegistersRTC.TabIndex = 52
+        Me.ReadInputRegistersRTC.Text = "Read Input Registers RTC"
+        Me.ReadInputRegistersRTC.UseVisualStyleBackColor = True
         '
-        'LabelEndoflifeDateDecrypted
+        'LabelRTC
         '
-        Me.LabelEndoflifeDateDecrypted.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.LabelEndoflifeDateDecrypted.Location = New System.Drawing.Point(7, 72)
-        Me.LabelEndoflifeDateDecrypted.Name = "LabelEndoflifeDateDecrypted"
-        Me.LabelEndoflifeDateDecrypted.Size = New System.Drawing.Size(125, 22)
-        Me.LabelEndoflifeDateDecrypted.TabIndex = 49
-        Me.LabelEndoflifeDateDecrypted.Text = " "
+        Me.LabelRTC.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelRTC.Location = New System.Drawing.Point(557, 400)
+        Me.LabelRTC.Name = "LabelRTC"
+        Me.LabelRTC.Size = New System.Drawing.Size(222, 22)
+        Me.LabelRTC.TabIndex = 55
+        Me.LabelRTC.Text = " "
         '
-        'Label7
+        'LabelAlarm
         '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(6, 16)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(59, 13)
-        Me.Label7.TabIndex = 50
-        Me.Label7.Text = "Alarm Date"
+        Me.LabelAlarm.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelAlarm.Location = New System.Drawing.Point(557, 428)
+        Me.LabelAlarm.Name = "LabelAlarm"
+        Me.LabelAlarm.Size = New System.Drawing.Size(222, 22)
+        Me.LabelAlarm.TabIndex = 57
+        Me.LabelAlarm.Text = " "
         '
-        'Label8
+        'ReadInputRegistersAlarm
         '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(6, 59)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(58, 13)
-        Me.Label8.TabIndex = 51
-        Me.Label8.Text = "End of Life"
+        Me.ReadInputRegistersAlarm.Location = New System.Drawing.Point(370, 428)
+        Me.ReadInputRegistersAlarm.Name = "ReadInputRegistersAlarm"
+        Me.ReadInputRegistersAlarm.Size = New System.Drawing.Size(179, 23)
+        Me.ReadInputRegistersAlarm.TabIndex = 56
+        Me.ReadInputRegistersAlarm.Text = "Read Input Registers Alarm"
+        Me.ReadInputRegistersAlarm.UseVisualStyleBackColor = True
         '
-        'GroupBox1
+        'LabelEndoflive
         '
-        Me.GroupBox1.Controls.Add(Me.Label8)
-        Me.GroupBox1.Controls.Add(Me.Label7)
-        Me.GroupBox1.Controls.Add(Me.LabelEndoflifeDateDecrypted)
-        Me.GroupBox1.Controls.Add(Me.LabelAlamDateDecrypted)
-        Me.GroupBox1.Location = New System.Drawing.Point(289, 35)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(144, 109)
-        Me.GroupBox1.TabIndex = 52
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "AES decrypted"
+        Me.LabelEndoflive.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelEndoflive.Location = New System.Drawing.Point(557, 461)
+        Me.LabelEndoflive.Name = "LabelEndoflive"
+        Me.LabelEndoflive.Size = New System.Drawing.Size(222, 22)
+        Me.LabelEndoflive.TabIndex = 59
+        Me.LabelEndoflive.Text = " "
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(370, 457)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(179, 23)
+        Me.Button1.TabIndex = 58
+        Me.Button1.Text = "Read Input Registers End of live"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'WsmbsControl1
+        '
+        Me.WsmbsControl1.BaudRate = 9600
+        Me.WsmbsControl1.DTREnable = False
+        Me.WsmbsControl1.Mode = WSMBS.Mode.RTU
+        Me.WsmbsControl1.Parity = WSMBS.Parity.None
+        Me.WsmbsControl1.PortName = "COM1"
+        Me.WsmbsControl1.RemoveEcho = False
+        Me.WsmbsControl1.ResponseTimeout = 1000
+        Me.WsmbsControl1.RTSEnable = False
+        Me.WsmbsControl1.StopBits = 1
+        '
+        'ButtonTimeSynchrone
+        '
+        Me.ButtonTimeSynchrone.Location = New System.Drawing.Point(370, 370)
+        Me.ButtonTimeSynchrone.Name = "ButtonTimeSynchrone"
+        Me.ButtonTimeSynchrone.Size = New System.Drawing.Size(175, 23)
+        Me.ButtonTimeSynchrone.TabIndex = 60
+        Me.ButtonTimeSynchrone.Text = "time synchronization"
+        Me.ButtonTimeSynchrone.UseVisualStyleBackColor = True
+        '
+        'ButtonWritealarm
+        '
+        Me.ButtonWritealarm.Location = New System.Drawing.Point(785, 428)
+        Me.ButtonWritealarm.Name = "ButtonWritealarm"
+        Me.ButtonWritealarm.Size = New System.Drawing.Size(122, 29)
+        Me.ButtonWritealarm.TabIndex = 61
+        Me.ButtonWritealarm.Text = "Button2"
+        Me.ButtonWritealarm.UseVisualStyleBackColor = True
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(967, 373)
+        Me.ClientSize = New System.Drawing.Size(967, 596)
+        Me.Controls.Add(Me.ButtonWritealarm)
+        Me.Controls.Add(Me.ButtonTimeSynchrone)
+        Me.Controls.Add(Me.LabelEndoflive)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.LabelAlarm)
+        Me.Controls.Add(Me.ReadInputRegistersAlarm)
+        Me.Controls.Add(Me.LabelRTC)
+        Me.Controls.Add(Me.ReadInputRegistersRTC)
+        Me.Controls.Add(Me.ButtonModbus)
+        Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.ButtonCodeTag)
         Me.Controls.Add(Me.ButtonR4)
         Me.Controls.Add(Me.ButtonClearAll)
@@ -427,7 +583,6 @@ Partial Class Form1
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.LabelTerminal)
-        Me.Controls.Add(Me.ListBox1)
         Me.Name = "Form1"
         Me.Text = "rf ID "
         Me.GroupBox2.ResumeLayout(False)
@@ -435,15 +590,15 @@ Partial Class Form1
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
-        Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
+        Me.GroupBox5.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents ListBox1 As System.Windows.Forms.ListBox
-    Friend WithEvents WsmbsControl1 As WSMBS.WSMBSControl
     Friend WithEvents LabelTerminal As System.Windows.Forms.Label
     Friend WithEvents SerialPort1 As System.IO.Ports.SerialPort
     Friend WithEvents ButtonCodeTag As System.Windows.Forms.Button
@@ -478,5 +633,20 @@ Partial Class Form1
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
+    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents Label11 As System.Windows.Forms.Label
+    Friend WithEvents LabelReg20 As System.Windows.Forms.Label
+    Friend WithEvents LabelReg16 As System.Windows.Forms.Label
+    Friend WithEvents ButtonModbus As System.Windows.Forms.Button
+    Private WithEvents ReadInputRegistersRTC As System.Windows.Forms.Button
+    Friend WithEvents LabelRTC As System.Windows.Forms.Label
+    Friend WithEvents LabelAlarm As System.Windows.Forms.Label
+    Private WithEvents ReadInputRegistersAlarm As System.Windows.Forms.Button
+    Friend WithEvents LabelEndoflive As System.Windows.Forms.Label
+    Private WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents WsmbsControl1 As WSMBS.WSMBSControl
+    Friend WithEvents ButtonTimeSynchrone As System.Windows.Forms.Button
+    Friend WithEvents ButtonWritealarm As System.Windows.Forms.Button
 
 End Class
