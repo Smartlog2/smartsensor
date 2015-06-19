@@ -64,16 +64,15 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
-        Me.ButtonModbus = New System.Windows.Forms.Button()
         Me.ReadInputRegistersRTC = New System.Windows.Forms.Button()
         Me.LabelRTC = New System.Windows.Forms.Label()
-        Me.LabelAlarm = New System.Windows.Forms.Label()
+        Me.LabelAlarmmodb = New System.Windows.Forms.Label()
         Me.ReadInputRegistersAlarm = New System.Windows.Forms.Button()
-        Me.LabelEndoflive = New System.Windows.Forms.Label()
+        Me.LabelEndoflifemodb = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.WsmbsControl1 = New WSMBS.WSMBSControl(Me.components)
         Me.ButtonTimeSynchrone = New System.Windows.Forms.Button()
         Me.ButtonWritealarm = New System.Windows.Forms.Button()
+        Me.CheckBoxRfID = New System.Windows.Forms.CheckBox()
         Me.GroupBox2.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
@@ -466,15 +465,6 @@ Partial Class Form1
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Serial Port"
         '
-        'ButtonModbus
-        '
-        Me.ButtonModbus.Location = New System.Drawing.Point(513, 333)
-        Me.ButtonModbus.Name = "ButtonModbus"
-        Me.ButtonModbus.Size = New System.Drawing.Size(266, 32)
-        Me.ButtonModbus.TabIndex = 50
-        Me.ButtonModbus.Text = "Modbus Connect"
-        Me.ButtonModbus.UseVisualStyleBackColor = True
-        '
         'ReadInputRegistersRTC
         '
         Me.ReadInputRegistersRTC.Location = New System.Drawing.Point(370, 399)
@@ -493,14 +483,14 @@ Partial Class Form1
         Me.LabelRTC.TabIndex = 55
         Me.LabelRTC.Text = " "
         '
-        'LabelAlarm
+        'LabelAlarmmodb
         '
-        Me.LabelAlarm.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.LabelAlarm.Location = New System.Drawing.Point(557, 428)
-        Me.LabelAlarm.Name = "LabelAlarm"
-        Me.LabelAlarm.Size = New System.Drawing.Size(222, 22)
-        Me.LabelAlarm.TabIndex = 57
-        Me.LabelAlarm.Text = " "
+        Me.LabelAlarmmodb.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelAlarmmodb.Location = New System.Drawing.Point(557, 428)
+        Me.LabelAlarmmodb.Name = "LabelAlarmmodb"
+        Me.LabelAlarmmodb.Size = New System.Drawing.Size(222, 22)
+        Me.LabelAlarmmodb.TabIndex = 57
+        Me.LabelAlarmmodb.Text = " "
         '
         'ReadInputRegistersAlarm
         '
@@ -511,14 +501,14 @@ Partial Class Form1
         Me.ReadInputRegistersAlarm.Text = "Read Input Registers Alarm"
         Me.ReadInputRegistersAlarm.UseVisualStyleBackColor = True
         '
-        'LabelEndoflive
+        'LabelEndoflifemodb
         '
-        Me.LabelEndoflive.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.LabelEndoflive.Location = New System.Drawing.Point(557, 461)
-        Me.LabelEndoflive.Name = "LabelEndoflive"
-        Me.LabelEndoflive.Size = New System.Drawing.Size(222, 22)
-        Me.LabelEndoflive.TabIndex = 59
-        Me.LabelEndoflive.Text = " "
+        Me.LabelEndoflifemodb.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelEndoflifemodb.Location = New System.Drawing.Point(557, 461)
+        Me.LabelEndoflifemodb.Name = "LabelEndoflifemodb"
+        Me.LabelEndoflifemodb.Size = New System.Drawing.Size(222, 22)
+        Me.LabelEndoflifemodb.TabIndex = 59
+        Me.LabelEndoflifemodb.Text = " "
         '
         'Button1
         '
@@ -528,18 +518,6 @@ Partial Class Form1
         Me.Button1.TabIndex = 58
         Me.Button1.Text = "Read Input Registers End of live"
         Me.Button1.UseVisualStyleBackColor = True
-        '
-        'WsmbsControl1
-        '
-        Me.WsmbsControl1.BaudRate = 9600
-        Me.WsmbsControl1.DTREnable = False
-        Me.WsmbsControl1.Mode = WSMBS.Mode.RTU
-        Me.WsmbsControl1.Parity = WSMBS.Parity.None
-        Me.WsmbsControl1.PortName = "COM1"
-        Me.WsmbsControl1.RemoveEcho = False
-        Me.WsmbsControl1.ResponseTimeout = 1000
-        Me.WsmbsControl1.RTSEnable = False
-        Me.WsmbsControl1.StopBits = 1
         '
         'ButtonTimeSynchrone
         '
@@ -552,27 +530,37 @@ Partial Class Form1
         '
         'ButtonWritealarm
         '
-        Me.ButtonWritealarm.Location = New System.Drawing.Point(785, 428)
+        Me.ButtonWritealarm.Location = New System.Drawing.Point(370, 486)
         Me.ButtonWritealarm.Name = "ButtonWritealarm"
-        Me.ButtonWritealarm.Size = New System.Drawing.Size(122, 29)
+        Me.ButtonWritealarm.Size = New System.Drawing.Size(409, 29)
         Me.ButtonWritealarm.TabIndex = 61
-        Me.ButtonWritealarm.Text = "Button2"
+        Me.ButtonWritealarm.Text = "Write Modbus Registers"
         Me.ButtonWritealarm.UseVisualStyleBackColor = True
+        '
+        'CheckBoxRfID
+        '
+        Me.CheckBoxRfID.AutoSize = True
+        Me.CheckBoxRfID.Location = New System.Drawing.Point(812, 404)
+        Me.CheckBoxRfID.Name = "CheckBoxRfID"
+        Me.CheckBoxRfID.Size = New System.Drawing.Size(79, 17)
+        Me.CheckBoxRfID.TabIndex = 62
+        Me.CheckBoxRfID.Text = "rfID Enable"
+        Me.CheckBoxRfID.UseVisualStyleBackColor = True
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(967, 596)
+        Me.Controls.Add(Me.CheckBoxRfID)
         Me.Controls.Add(Me.ButtonWritealarm)
         Me.Controls.Add(Me.ButtonTimeSynchrone)
-        Me.Controls.Add(Me.LabelEndoflive)
+        Me.Controls.Add(Me.LabelEndoflifemodb)
         Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.LabelAlarm)
+        Me.Controls.Add(Me.LabelAlarmmodb)
         Me.Controls.Add(Me.ReadInputRegistersAlarm)
         Me.Controls.Add(Me.LabelRTC)
         Me.Controls.Add(Me.ReadInputRegistersRTC)
-        Me.Controls.Add(Me.ButtonModbus)
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.ButtonCodeTag)
         Me.Controls.Add(Me.ButtonR4)
@@ -596,6 +584,7 @@ Partial Class Form1
         Me.GroupBox4.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents ListBox1 As System.Windows.Forms.ListBox
@@ -638,15 +627,14 @@ Partial Class Form1
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents LabelReg20 As System.Windows.Forms.Label
     Friend WithEvents LabelReg16 As System.Windows.Forms.Label
-    Friend WithEvents ButtonModbus As System.Windows.Forms.Button
     Private WithEvents ReadInputRegistersRTC As System.Windows.Forms.Button
     Friend WithEvents LabelRTC As System.Windows.Forms.Label
-    Friend WithEvents LabelAlarm As System.Windows.Forms.Label
+    Friend WithEvents LabelAlarmmodb As System.Windows.Forms.Label
     Private WithEvents ReadInputRegistersAlarm As System.Windows.Forms.Button
-    Friend WithEvents LabelEndoflive As System.Windows.Forms.Label
+    Friend WithEvents LabelEndoflifemodb As System.Windows.Forms.Label
     Private WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents WsmbsControl1 As WSMBS.WSMBSControl
     Friend WithEvents ButtonTimeSynchrone As System.Windows.Forms.Button
     Friend WithEvents ButtonWritealarm As System.Windows.Forms.Button
+    Friend WithEvents CheckBoxRfID As System.Windows.Forms.CheckBox
 
 End Class

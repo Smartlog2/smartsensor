@@ -1,9 +1,12 @@
 ﻿Imports System.Security.Cryptography
 
-Public Class Form1
-    Public Class AESCrypter
 
-        Public Shared pass As Byte() = {&H0, &H1, &H2, &H3, &H4, &H5, &H6, &H7, &H8, &H9, &HA, &HB, &HC, &HD, &HE, &HF}
+
+Public Class Form1
+    Dim sbMst As New ShortBus.Master()
+    Public Class AESCrypter
+        '
+        Public Shared pass As Byte() = {&H7A, &H41, &H36, &H77, &H6E, &H6B, &H4B, &H39, &H4A, &H37, &H44, &H74, &H57, &H42, &H45, &H4D}
 
         Public Shared Function AES_Encrypt(ByVal Buffer As Byte()) As Byte()
             Dim AES As New System.Security.Cryptography.RijndaelManaged
@@ -41,7 +44,7 @@ Public Class Form1
                 AES.Mode = CipherMode.ECB
                 Dim DESDecrypter As System.Security.Cryptography.ICryptoTransform = AES.CreateDecryptor
                 uit = DESDecrypter.TransformFinalBlock(Buffer, 0, Buffer.Length)
-               
+
                 Return uit
             Catch ex As Exception
                 Return Nothing
@@ -51,12 +54,12 @@ Public Class Form1
 
     End Class
 
-   
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         For Each sp As String In My.Computer.Ports.SerialPortNames
             ListBox1.Items.Add(sp)
         Next
-        
+
 
         DateTimePickerAlarm.Format = DateTimePickerFormat.Time
         LabelAlarmDate.Text = "Alarm date = " + DateTimePickerAlarm.Value.ToLocalTime.ToString
@@ -67,7 +70,7 @@ Public Class Form1
         With DateTimePickerEndofLife.Value
             LabelEndoflifeDateFrame.Text = .Year.ToString + .Month.ToString("00") + .Day.ToString("00") + .Hour.ToString("00") + .Minute.ToString("00") + .Second.ToString("00")
         End With
-
+        sbMst.SetCOMPort(8, 9600, 8, "N", 1)
     End Sub
 
 
@@ -88,7 +91,7 @@ Public Class Form1
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
-        
+
 
         SerialPort1.WriteLine(Data)
 
@@ -119,7 +122,7 @@ Public Class Form1
     Private Sub Button2WriteR04_Click(sender As Object, e As EventArgs) Handles ButtonCodeTag.Click
         Dim LabelRegister As Label() = New Label() {LabelReg4, LabelReg8, LabelReg12}
         Dim i As Integer
-       
+
         Dim mydata As String
 
         Dim EncryptionID, EncryptionAlarmdate, EncryptionEndoflife As String
@@ -288,7 +291,7 @@ Public Class Form1
         End If
 
     End Sub
-    
+
     Private Function DoDecryption(ByVal mydata As String) As String
         Dim myDecryption As Byte()
         Dim myDecryptionString As String
@@ -306,7 +309,7 @@ Public Class Form1
 
 
     End Function
-   
+
 
     Private Function DoEncryption(ByVal mydata As String) As String
 
@@ -368,7 +371,7 @@ Public Class Form1
         LabelTerminal.Text = "Reading Tag..."
         If Readregisters() = False Then
 
-           
+
             LabelTerminal.Text = "Reading done!"
         Else
             LabelTerminal.Text = "Reading not possible, no Tag?"
@@ -414,7 +417,7 @@ Public Class Form1
 
 
     Private Sub DateTimePickerAlarm_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePickerAlarm.ValueChanged
-        LabelAlarmDate.Text = "Alarm date = " + DateTimePickerAlarm.Value.ToLocalTime.ToString
+        LabelAlarmDate.Text = "Alarm date = " + DateTimePickerAlarm.Value.ToString
         With DateTimePickerAlarm.Value
             LabelAlarmDateFrame.Text = .Year.ToString + .Month.ToString("00") + .Day.ToString("00") + .Hour.ToString("00") + .Minute.ToString("00") + .Second.ToString("00")
         End With
@@ -426,7 +429,7 @@ Public Class Form1
     End Sub
 
     Private Sub DateTimePickerEndofLife_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePickerEndofLife.ValueChanged
-        LabelEndofLife.Text = "End of life = " + DateTimePickerEndofLife.Value.ToLocalTime.ToString
+        LabelEndofLife.Text = "End of life = " + DateTimePickerEndofLife.Value.ToString
         With DateTimePickerEndofLife.Value
             LabelEndoflifeDateFrame.Text = .Year.ToString + .Month.ToString("00") + .Day.ToString("00") + .Hour.ToString("00") + .Minute.ToString("00") + .Second.ToString("00")
         End With
@@ -488,19 +491,12 @@ Public Class Form1
 
     End Sub
 
-    
-    Private Sub ButtonModbus_Click(sender As Object, e As EventArgs) Handles ButtonModbus.Click
-        Dim Result As WSMBS.Result
-        WsmbsControl1.Mode = WSMBS.Mode.RTU      'Use standard Modbus RTU
-        WsmbsControl1.PortName = "COM8"
-        WsmbsControl1.BaudRate = 9600
-        WsmbsControl1.StopBits = 1
-        WsmbsControl1.Parity = WSMBS.Parity.None
-        WsmbsControl1.ResponseTimeout = 1000   '1000ms
-        Result = WsmbsControl1.Open()
-        If Result <> WSMBS.Result.SUCCESS Then
-            MessageBox.Show(WsmbsControl1.GetLastErrorString())
-        End If
+
+    Private Sub ButtonModbus_Click(sender As Object, e As EventArgs)
+
+
+
+
     End Sub
 
     Private Sub Button1_Click_2(sender As Object, e As EventArgs)
@@ -516,12 +512,18 @@ Public Class Form1
         Dim DataString As String = ""
         Dim str As String = ""
         Dim sec, hour, min, day, month, year As String
-        Dim Registers(5) As Short
-        Dim Result As WSMBS.Result
+        Dim Registers(5) As UShort
         Dim myResult As String
 
-        Result = WsmbsControl1.ReadInputRegisters(1, kind, 6, Registers)
-        If (Result = WSMBS.Result.SUCCESS) Then
+        Dim err As UShort
+        Dim read(10) As UShort
+        Dim data(10) As UShort
+
+        err = sbMst.ReadWords(1, kind + 1, 6, Registers, delay:=250, type3x:=True, byteswap:=False)
+        
+
+
+        If err = 0 Then
             sec = Registers(0).ToString("00")
             min = Registers(1).ToString("00")
             hour = Registers(2).ToString("00")
@@ -532,24 +534,25 @@ Public Class Form1
             myResult = day & "/" & month & "/" & year & "  " & hour & ":" & min & ":" & sec
 
         Else
-            MessageBox.Show(WsmbsControl1.GetLastErrorString())
+
+            MessageBox.Show(err)
         End If
         Return myResult
     End Function
 
     Private Sub ReadInputRegistersAlarm_Click(sender As Object, e As EventArgs) Handles ReadInputRegistersAlarm.Click
 
-        LabelAlarm.Text = Dates(6)
+        LabelAlarmmodb.Text = Dates(6)
     End Sub
 
     Private Sub Button1_Click_3(sender As Object, e As EventArgs) Handles Button1.Click
-        LabelEndoflive.Text = Dates(12)
+        LabelEndoflifemodb.Text = Dates(12)
     End Sub
 
     Private Sub ButtonTimeSynchrone_Click(sender As Object, e As EventArgs) Handles ButtonTimeSynchrone.Click
-        Dim Registers(6) As Short
+        Dim Registers(6) As UShort
         Dim i As Integer
-        Dim Result As WSMBS.Result
+
         Registers(0) = Now.Second
         Registers(1) = Now.Minute
         Registers(2) = Now.Hour
@@ -558,12 +561,10 @@ Public Class Form1
         Registers(5) = Now.Month
         Registers(6) = Val(Now.Year.ToString().Substring(2, 2))
 
+        sbMst.WriteWordMultiple(1, 1, 7, Registers, delay:=250)
 
 
-        Result = WsmbsControl1.WriteMultipleRegisters(1, 0, 7, Registers)
-        If (Result <> WSMBS.Result.SUCCESS) Then
-            MessageBox.Show(WsmbsControl1.GetLastErrorString())
-        End If
+
     End Sub
 
     Private Sub GroupBox3_Enter(sender As Object, e As EventArgs) Handles GroupBox3.Enter
@@ -572,6 +573,11 @@ Public Class Form1
 
     Private Sub ButtonWritealarm_Click(sender As Object, e As EventArgs) Handles ButtonWritealarm.Click
         Dim EncryptionID, EncryptionAlarmdate, EncryptionEndoflife As String
+
+
+        LabelAlarmmodb.Text = ""
+        LabelEndoflifemodb.Text = ""
+
 
         'Alarm date encryption
         EncryptionAlarmdate = DoEncryption(LabelAlarmDateFrame.Text)
@@ -584,26 +590,47 @@ Public Class Form1
         ProgressBar1.Value += 1
 
 
-        Dim Result As WSMBS.Result
-        Dim Registers(15) As Short
+
+        Dim Registers(30) As UShort
         Dim t As Integer
-        
-        Dim hexString As String = LabelAESAlarmDate.Text
 
-
-       
-
+        Dim hexString As String = LabelAESEndoflifeDate.Text
 
         For t = 0 To 15
             Registers(t) = Convert.ToByte(hexString.Substring(t * 2, 2), 16)
         Next
 
+        hexString = LabelEndoflifeDateFrame.Text
+        For t = 0 To 6
+            Registers(16 + t) = Convert.ToByte(hexString.Substring(t * 2, 2), 16)
+        Next
+        hexString = LabelAlarmDateFrame.Text
+        For t = 0 To 6
+            Registers(23 + t) = Convert.ToByte(hexString.Substring(t * 2, 2), 16)
+        Next
+
+        Registers(30) = &H45
+
+        sbMst.WriteWordMultiple(1, 8, 31, Registers, delay:=250)
+
+    End Sub
 
 
+    Private Sub RadioButtonrfID_CheckedChanged(sender As Object, e As EventArgs)
 
-        Result = WsmbsControl1.WriteMultipleRegisters(1, 7, 16, Registers)
-        If (Result <> WSMBS.Result.SUCCESS) Then
-            MessageBox.Show(WsmbsControl1.GetLastErrorString())
+    End Sub
+
+    Private Sub CheckBoxRfID_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxRfID.CheckedChanged
+        Dim Registers(0) As UShort
+        'Dim Result As WSMBS.Result
+        If CheckBoxRfID.Checked Then
+            Registers(0) = 0
+            sbMst.WriteWordMultiple(1, 38, 1, Registers, delay:=250)
+
+            ' Result = WsmbsControl1.WriteMultipleRegisters(1, 37, 1, Registers)
+            ' If (Result <> WSMBS.Result.SUCCESS) Then
+            'MessageBox.Show(WsmbsControl1.GetLastErrorString())
+            'End If
         End If
     End Sub
 End Class
