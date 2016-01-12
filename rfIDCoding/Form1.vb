@@ -1,9 +1,10 @@
 ﻿Imports System.Security.Cryptography
-
+Imports System.Xml
 
 
 Public Class Form1
     Dim sbMst As New ShortBus.Master()
+    Dim mylistClientID, mylistDescription, mylistLow, mylistHigh As New ArrayList
     Private Const modbusaddres = 1
 
     Public Class AESCrypter
@@ -64,8 +65,8 @@ Public Class Form1
 
 
         DateTimePickerAlarm.Format = DateTimePickerFormat.Time
-        LabelAlarmDate.Text = "Alarm date = " + DateTimePickerAlarm.Value.ToLocalTime.ToString
-        LabelEndofLife.Text = "End of life = " + DateTimePickerEndofLife.Value.ToLocalTime.ToString
+        LabelAlarmDate.Text = "Low Alarm date = " + DateTimePickerAlarm.Value.ToLocalTime.ToString
+        LabelEndofLife.Text = "High Alarm date = " + DateTimePickerEndofLife.Value.ToLocalTime.ToString
         With DateTimePickerAlarm.Value
             LabelAlarmDateFrame.Text = .Year.ToString + .Month.ToString("00") + .Day.ToString("00") + .Hour.ToString("00") + .Minute.ToString("00") + .Second.ToString("00")
         End With
@@ -73,6 +74,7 @@ Public Class Form1
             LabelEndoflifeDateFrame.Text = .Year.ToString + .Month.ToString("00") + .Day.ToString("00") + .Hour.ToString("00") + .Minute.ToString("00") + .Second.ToString("00")
         End With
         sbMst.SetCOMPort(4, 9600, 8, "N", 1)
+        ClientList()
     End Sub
 
     Function RFID(ByVal Data As String) As String
@@ -526,7 +528,7 @@ Public Class Form1
     End Sub
 
     Private Sub DateTimePickerAlarm_ValueChanged_1(sender As Object, e As EventArgs) Handles DateTimePickerAlarm.ValueChanged
-        LabelAlarmDate.Text = "Alarm date = " + DateTimePickerAlarm.Value.ToString
+        LabelAlarmDate.Text = "Low Alarm date = " + DateTimePickerAlarm.Value.ToString
         With DateTimePickerAlarm.Value
             LabelAlarmDateFrame.Text = .Year.ToString + .Month.ToString("00") + .Day.ToString("00") + .Hour.ToString("00") + .Minute.ToString("00") + .Second.ToString("00")
         End With
@@ -534,7 +536,7 @@ Public Class Form1
     End Sub
 
     Private Sub DateTimePickerEndofLife_ValueChanged_1(sender As Object, e As EventArgs) Handles DateTimePickerEndofLife.ValueChanged
-        LabelEndofLife.Text = "End of life = " + DateTimePickerEndofLife.Value.ToString
+        LabelEndofLife.Text = "High Alarm date = " + DateTimePickerEndofLife.Value.ToString
         With DateTimePickerEndofLife.Value
             LabelEndoflifeDateFrame.Text = .Year.ToString + .Month.ToString("00") + .Day.ToString("00") + .Hour.ToString("00") + .Minute.ToString("00") + .Second.ToString("00")
         End With
@@ -621,6 +623,84 @@ Public Class Form1
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
+
+    End Sub
+
+    Private Sub ButClipboard_Click(sender As Object, e As EventArgs) Handles ButClipboard.Click
+        If LabelTagID.Text = " " Then
+            MsgBox("TagID is empty")
+        Else
+            Clipboard.SetText(LabelTagID.Text)
+        End If
+
+    End Sub
+
+    Private Sub ClientList()
+
+
+        Dim appPath As String = Application.StartupPath()
+
+        Dim document As XmlReader = New XmlTextReader(appPath + "/rfid.xml")
+
+        While (document.Read())
+
+            Dim type = document.NodeType
+
+            If (type = XmlNodeType.Element) Then
+
+                If (document.Name = "ClientID") Then
+
+                    mylistClientID.Add(document.ReadInnerXml.ToString)
+                End If
+
+                If (document.Name = "Description") Then
+
+
+                    mylistDescription.Add(document.ReadInnerXml.ToString)
+
+                End If
+
+                If (document.Name = "Low") Then
+
+
+                    'label3.Text = document.ReadInnerXml.ToString()
+                    mylistLow.Add(document.ReadInnerXml.ToString)
+                End If
+
+                If (document.Name = "High") Then
+
+
+                    'label3.Text = document.ReadInnerXml.ToString()
+                    mylistHigh.Add(document.ReadInnerXml.ToString)
+                End If
+            End If
+
+
+        End While
+        Dim obj As New Object
+
+        For Each obj In mylistDescription
+
+            ListBoxClients.Items.Add(obj)
+
+
+        Next
+
+
+    End Sub
+
+     
+    Private Sub ListBoxClients_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBoxClients.SelectedIndexChanged
+
+        Dim newDateLow, newDateHigh As DateTime
+
+        newDateLow = DateTime.Today.AddMonths(mylistLow(ListBoxClients.SelectedIndex))
+        newDateHigh = DateTime.Today.AddMonths(mylistHigh(ListBoxClients.SelectedIndex))
+
+        DateTimePickerAlarm.Value = New DateTime(newDateLow.Year, newDateLow.Month, newDateLow.Day, 12, 0, 0)
+        DateTimePickerEndofLife.Value = New DateTime(newDateHigh.Year, newDateHigh.Month, newDateHigh.Day, 12, 0, 0)
+       
+        ' Dim mylistClientID, mylistDescription, mylistLow, mylistHigh As New ArrayList
 
     End Sub
 End Class

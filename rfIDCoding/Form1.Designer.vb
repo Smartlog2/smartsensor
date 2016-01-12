@@ -29,11 +29,13 @@ Partial Class Form1
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.Rf = New System.Windows.Forms.TabPage()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.ButtonCodeTag = New System.Windows.Forms.Button()
         Me.ButtonClearAll = New System.Windows.Forms.Button()
         Me.ButtonR4 = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.ButClipboard = New System.Windows.Forms.Button()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.LabelReg20 = New System.Windows.Forms.Label()
@@ -58,6 +60,7 @@ Partial Class Form1
         Me.LabelAESrfiID = New System.Windows.Forms.Label()
         Me.LabelAESAlarmDate = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.ListBoxClients = New System.Windows.Forms.ListBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.DateTimePickerEndofLife = New System.Windows.Forms.DateTimePicker()
@@ -74,7 +77,6 @@ Partial Class Form1
         Me.ReadInputRegistersAlarm = New System.Windows.Forms.Button()
         Me.LabelRTC = New System.Windows.Forms.Label()
         Me.ReadInputRegistersRTC = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.TabControl1.SuspendLayout()
         Me.Rf.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
@@ -147,6 +149,13 @@ Partial Class Form1
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Serial Port"
         '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(6, 57)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(76, 20)
+        Me.TextBox1.TabIndex = 54
+        '
         'ListBox1
         '
         Me.ListBox1.FormattingEnabled = True
@@ -184,6 +193,7 @@ Partial Class Form1
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.ButClipboard)
         Me.GroupBox3.Controls.Add(Me.Label12)
         Me.GroupBox3.Controls.Add(Me.Label11)
         Me.GroupBox3.Controls.Add(Me.LabelReg20)
@@ -197,12 +207,21 @@ Partial Class Form1
         Me.GroupBox3.Controls.Add(Me.LabelReg8)
         Me.GroupBox3.Controls.Add(Me.LabelTagID)
         Me.GroupBox3.Controls.Add(Me.LabelReg4)
-        Me.GroupBox3.Location = New System.Drawing.Point(594, 18)
+        Me.GroupBox3.Location = New System.Drawing.Point(680, 18)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(439, 254)
         Me.GroupBox3.TabIndex = 49
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Tag Registers"
+        '
+        'ButClipboard
+        '
+        Me.ButClipboard.Location = New System.Drawing.Point(171, 26)
+        Me.ButClipboard.Name = "ButClipboard"
+        Me.ButClipboard.Size = New System.Drawing.Size(99, 25)
+        Me.ButClipboard.TabIndex = 57
+        Me.ButClipboard.Text = "Copy to Clipboard"
+        Me.ButClipboard.UseVisualStyleBackColor = True
         '
         'Label12
         '
@@ -258,18 +277,18 @@ Partial Class Form1
         Me.Label8.AutoSize = True
         Me.Label8.Location = New System.Drawing.Point(6, 59)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(58, 13)
+        Me.Label8.Size = New System.Drawing.Size(84, 13)
         Me.Label8.TabIndex = 51
-        Me.Label8.Text = "End of Life"
+        Me.Label8.Text = "High Alarm Date"
         '
         'Label7
         '
         Me.Label7.AutoSize = True
         Me.Label7.Location = New System.Drawing.Point(6, 16)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(59, 13)
+        Me.Label7.Size = New System.Drawing.Size(82, 13)
         Me.Label7.TabIndex = 50
-        Me.Label7.Text = "Alarm Date"
+        Me.Label7.Text = "Low Alarm Date"
         '
         'LabelEndoflifeDateDecrypted
         '
@@ -368,7 +387,7 @@ Partial Class Form1
         Me.GroupBox4.Controls.Add(Me.LabelAlarmDateFrame)
         Me.GroupBox4.Controls.Add(Me.LabelAESrfiID)
         Me.GroupBox4.Controls.Add(Me.LabelAESAlarmDate)
-        Me.GroupBox4.Location = New System.Drawing.Point(285, 18)
+        Me.GroupBox4.Location = New System.Drawing.Point(416, 18)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(258, 171)
         Me.GroupBox4.TabIndex = 48
@@ -422,6 +441,7 @@ Partial Class Form1
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.ListBoxClients)
         Me.GroupBox2.Controls.Add(Me.Label6)
         Me.GroupBox2.Controls.Add(Me.Label5)
         Me.GroupBox2.Controls.Add(Me.DateTimePickerEndofLife)
@@ -430,33 +450,41 @@ Partial Class Form1
         Me.GroupBox2.Controls.Add(Me.LabelAlarmDate)
         Me.GroupBox2.Location = New System.Drawing.Point(18, 18)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(220, 171)
+        Me.GroupBox2.Size = New System.Drawing.Size(380, 171)
         Me.GroupBox2.TabIndex = 40
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "TAG Life Time"
+        '
+        'ListBoxClients
+        '
+        Me.ListBoxClients.FormattingEnabled = True
+        Me.ListBoxClients.Location = New System.Drawing.Point(234, 31)
+        Me.ListBoxClients.Name = "ListBoxClients"
+        Me.ListBoxClients.Size = New System.Drawing.Size(133, 121)
+        Me.ListBoxClients.TabIndex = 44
         '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(20, 61)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(58, 13)
+        Me.Label6.Size = New System.Drawing.Size(84, 13)
         Me.Label6.TabIndex = 43
-        Me.Label6.Text = "End of Life"
+        Me.Label6.Text = "High Alarm Date"
         '
         'Label5
         '
         Me.Label5.AutoSize = True
         Me.Label5.Location = New System.Drawing.Point(20, 32)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(59, 13)
+        Me.Label5.Size = New System.Drawing.Size(82, 13)
         Me.Label5.TabIndex = 42
-        Me.Label5.Text = "Alarm Date"
+        Me.Label5.Text = "Low Alarm Date"
         '
         'DateTimePickerEndofLife
         '
         Me.DateTimePickerEndofLife.Format = System.Windows.Forms.DateTimePickerFormat.Time
-        Me.DateTimePickerEndofLife.Location = New System.Drawing.Point(114, 61)
+        Me.DateTimePickerEndofLife.Location = New System.Drawing.Point(141, 57)
         Me.DateTimePickerEndofLife.Name = "DateTimePickerEndofLife"
         Me.DateTimePickerEndofLife.Size = New System.Drawing.Size(87, 20)
         Me.DateTimePickerEndofLife.TabIndex = 41
@@ -464,7 +492,7 @@ Partial Class Form1
         'DateTimePickerAlarm
         '
         Me.DateTimePickerAlarm.Format = System.Windows.Forms.DateTimePickerFormat.Time
-        Me.DateTimePickerAlarm.Location = New System.Drawing.Point(114, 29)
+        Me.DateTimePickerAlarm.Location = New System.Drawing.Point(141, 31)
         Me.DateTimePickerAlarm.Name = "DateTimePickerAlarm"
         Me.DateTimePickerAlarm.Size = New System.Drawing.Size(87, 20)
         Me.DateTimePickerAlarm.TabIndex = 40
@@ -474,18 +502,18 @@ Partial Class Form1
         Me.LabelEndofLife.AutoSize = True
         Me.LabelEndofLife.Location = New System.Drawing.Point(20, 133)
         Me.LabelEndofLife.Name = "LabelEndofLife"
-        Me.LabelEndofLife.Size = New System.Drawing.Size(58, 13)
+        Me.LabelEndofLife.Size = New System.Drawing.Size(84, 13)
         Me.LabelEndofLife.TabIndex = 30
-        Me.LabelEndofLife.Text = "End of Life"
+        Me.LabelEndofLife.Text = "High Alarm Date"
         '
         'LabelAlarmDate
         '
         Me.LabelAlarmDate.AutoSize = True
         Me.LabelAlarmDate.Location = New System.Drawing.Point(20, 100)
         Me.LabelAlarmDate.Name = "LabelAlarmDate"
-        Me.LabelAlarmDate.Size = New System.Drawing.Size(59, 13)
+        Me.LabelAlarmDate.Size = New System.Drawing.Size(82, 13)
         Me.LabelAlarmDate.TabIndex = 29
-        Me.LabelAlarmDate.Text = "Alarm Date"
+        Me.LabelAlarmDate.Text = "Low Alarm Date"
         '
         'TabPage2
         '
@@ -588,13 +616,6 @@ Partial Class Form1
         Me.ReadInputRegistersRTC.Text = "Read Input Registers RTC"
         Me.ReadInputRegistersRTC.UseVisualStyleBackColor = True
         '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(6, 57)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(76, 20)
-        Me.TextBox1.TabIndex = 54
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -674,5 +695,7 @@ Partial Class Form1
     Friend WithEvents LabelEndofLife As System.Windows.Forms.Label
     Friend WithEvents LabelAlarmDate As System.Windows.Forms.Label
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents ButClipboard As System.Windows.Forms.Button
+    Friend WithEvents ListBoxClients As System.Windows.Forms.ListBox
 
 End Class
