@@ -35,12 +35,15 @@ Partial Class Form1
         Me.ButtonClearAll = New System.Windows.Forms.Button()
         Me.ButtonR4 = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.LabelReg24 = New System.Windows.Forms.Label()
         Me.ButClipboard = New System.Windows.Forms.Button()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.LabelReg20 = New System.Windows.Forms.Label()
         Me.LabelReg16 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.LabelEndoflifeinweeks = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.LabelEndoflifeDateDecrypted = New System.Windows.Forms.Label()
@@ -54,12 +57,17 @@ Partial Class Form1
         Me.LabelTagID = New System.Windows.Forms.Label()
         Me.LabelReg4 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.LabelAESWeeks = New System.Windows.Forms.Label()
         Me.LabelEndoflifeDateFrame = New System.Windows.Forms.Label()
         Me.LabelAESEndoflifeDate = New System.Windows.Forms.Label()
         Me.LabelAlarmDateFrame = New System.Windows.Forms.Label()
         Me.LabelAESrfiID = New System.Windows.Forms.Label()
         Me.LabelAESAlarmDate = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.NumericUpDownWeeksB = New System.Windows.Forms.NumericUpDown()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.NumericUpDownWeeks = New System.Windows.Forms.NumericUpDown()
+        Me.Label9 = New System.Windows.Forms.Label()
         Me.ListBoxClients = New System.Windows.Forms.ListBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -77,6 +85,13 @@ Partial Class Form1
         Me.ReadInputRegistersAlarm = New System.Windows.Forms.Button()
         Me.LabelRTC = New System.Windows.Forms.Label()
         Me.ReadInputRegistersRTC = New System.Windows.Forms.Button()
+        Me.CheckBox_Dynamisch = New System.Windows.Forms.CheckBox()
+        Me.NumericUpDownWeeksC = New System.Windows.Forms.NumericUpDown()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.LabelWeeksA = New System.Windows.Forms.Label()
+        Me.LabelWeeksB = New System.Windows.Forms.Label()
+        Me.LabelWeeksC = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.Rf.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
@@ -84,13 +99,16 @@ Partial Class Form1
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
+        CType(Me.NumericUpDownWeeksB, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumericUpDownWeeks, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage2.SuspendLayout()
+        CType(Me.NumericUpDownWeeksC, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LabelTerminal
         '
         Me.LabelTerminal.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.LabelTerminal.Location = New System.Drawing.Point(3, 428)
+        Me.LabelTerminal.Location = New System.Drawing.Point(3, 489)
         Me.LabelTerminal.Name = "LabelTerminal"
         Me.LabelTerminal.Size = New System.Drawing.Size(943, 25)
         Me.LabelTerminal.TabIndex = 6
@@ -102,7 +120,7 @@ Partial Class Form1
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(0, 456)
+        Me.ProgressBar1.Location = New System.Drawing.Point(0, 517)
         Me.ProgressBar1.MarqueeAnimationSpeed = 1
         Me.ProgressBar1.Maximum = 60
         Me.ProgressBar1.Name = "ProgressBar1"
@@ -118,7 +136,7 @@ Partial Class Form1
         Me.TabControl1.Location = New System.Drawing.Point(3, 12)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1149, 397)
+        Me.TabControl1.Size = New System.Drawing.Size(1149, 474)
         Me.TabControl1.TabIndex = 63
         '
         'Rf
@@ -133,7 +151,7 @@ Partial Class Form1
         Me.Rf.Location = New System.Drawing.Point(4, 22)
         Me.Rf.Name = "Rf"
         Me.Rf.Padding = New System.Windows.Forms.Padding(3)
-        Me.Rf.Size = New System.Drawing.Size(1141, 371)
+        Me.Rf.Size = New System.Drawing.Size(1141, 448)
         Me.Rf.TabIndex = 0
         Me.Rf.Text = "rf ID TAGS"
         Me.Rf.UseVisualStyleBackColor = True
@@ -142,7 +160,7 @@ Partial Class Form1
         '
         Me.GroupBox5.Controls.Add(Me.TextBox1)
         Me.GroupBox5.Controls.Add(Me.ListBox1)
-        Me.GroupBox5.Location = New System.Drawing.Point(430, 267)
+        Me.GroupBox5.Location = New System.Drawing.Point(430, 345)
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.Size = New System.Drawing.Size(103, 83)
         Me.GroupBox5.TabIndex = 53
@@ -166,7 +184,7 @@ Partial Class Form1
         '
         'ButtonCodeTag
         '
-        Me.ButtonCodeTag.Location = New System.Drawing.Point(18, 305)
+        Me.ButtonCodeTag.Location = New System.Drawing.Point(18, 383)
         Me.ButtonCodeTag.Name = "ButtonCodeTag"
         Me.ButtonCodeTag.Size = New System.Drawing.Size(380, 45)
         Me.ButtonCodeTag.TabIndex = 52
@@ -175,7 +193,7 @@ Partial Class Form1
         '
         'ButtonClearAll
         '
-        Me.ButtonClearAll.Location = New System.Drawing.Point(222, 242)
+        Me.ButtonClearAll.Location = New System.Drawing.Point(235, 333)
         Me.ButtonClearAll.Name = "ButtonClearAll"
         Me.ButtonClearAll.Size = New System.Drawing.Size(163, 41)
         Me.ButtonClearAll.TabIndex = 51
@@ -184,7 +202,7 @@ Partial Class Form1
         '
         'ButtonR4
         '
-        Me.ButtonR4.Location = New System.Drawing.Point(18, 242)
+        Me.ButtonR4.Location = New System.Drawing.Point(18, 333)
         Me.ButtonR4.Name = "ButtonR4"
         Me.ButtonR4.Size = New System.Drawing.Size(163, 41)
         Me.ButtonR4.TabIndex = 50
@@ -193,6 +211,8 @@ Partial Class Form1
         '
         'GroupBox3
         '
+        Me.GroupBox3.Controls.Add(Me.Label10)
+        Me.GroupBox3.Controls.Add(Me.LabelReg24)
         Me.GroupBox3.Controls.Add(Me.ButClipboard)
         Me.GroupBox3.Controls.Add(Me.Label12)
         Me.GroupBox3.Controls.Add(Me.Label11)
@@ -209,10 +229,28 @@ Partial Class Form1
         Me.GroupBox3.Controls.Add(Me.LabelReg4)
         Me.GroupBox3.Location = New System.Drawing.Point(680, 18)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(439, 254)
+        Me.GroupBox3.Size = New System.Drawing.Size(439, 311)
         Me.GroupBox3.TabIndex = 49
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Tag Registers"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(243, 237)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(27, 13)
+        Me.Label10.TabIndex = 59
+        Me.Label10.Text = "R15"
+        '
+        'LabelReg24
+        '
+        Me.LabelReg24.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelReg24.Location = New System.Drawing.Point(15, 237)
+        Me.LabelReg24.Name = "LabelReg24"
+        Me.LabelReg24.Size = New System.Drawing.Size(222, 22)
+        Me.LabelReg24.TabIndex = 58
+        Me.LabelReg24.Text = " "
         '
         'ButClipboard
         '
@@ -261,16 +299,30 @@ Partial Class Form1
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.LabelWeeksC)
+        Me.GroupBox1.Controls.Add(Me.LabelWeeksB)
+        Me.GroupBox1.Controls.Add(Me.LabelWeeksA)
+        Me.GroupBox1.Controls.Add(Me.Label16)
+        Me.GroupBox1.Controls.Add(Me.LabelEndoflifeinweeks)
         Me.GroupBox1.Controls.Add(Me.Label8)
         Me.GroupBox1.Controls.Add(Me.Label7)
         Me.GroupBox1.Controls.Add(Me.LabelEndoflifeDateDecrypted)
         Me.GroupBox1.Controls.Add(Me.LabelAlamDateDecrypted)
         Me.GroupBox1.Location = New System.Drawing.Point(289, 35)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(144, 109)
+        Me.GroupBox1.Size = New System.Drawing.Size(144, 240)
         Me.GroupBox1.TabIndex = 52
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "AES decrypted"
+        '
+        'LabelEndoflifeinweeks
+        '
+        Me.LabelEndoflifeinweeks.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelEndoflifeinweeks.Location = New System.Drawing.Point(7, 122)
+        Me.LabelEndoflifeinweeks.Name = "LabelEndoflifeinweeks"
+        Me.LabelEndoflifeinweeks.Size = New System.Drawing.Size(125, 22)
+        Me.LabelEndoflifeinweeks.TabIndex = 52
+        Me.LabelEndoflifeinweeks.Text = " "
         '
         'Label8
         '
@@ -382,6 +434,7 @@ Partial Class Form1
         '
         'GroupBox4
         '
+        Me.GroupBox4.Controls.Add(Me.LabelAESWeeks)
         Me.GroupBox4.Controls.Add(Me.LabelEndoflifeDateFrame)
         Me.GroupBox4.Controls.Add(Me.LabelAESEndoflifeDate)
         Me.GroupBox4.Controls.Add(Me.LabelAlarmDateFrame)
@@ -389,19 +442,28 @@ Partial Class Form1
         Me.GroupBox4.Controls.Add(Me.LabelAESAlarmDate)
         Me.GroupBox4.Location = New System.Drawing.Point(416, 18)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(258, 171)
+        Me.GroupBox4.Size = New System.Drawing.Size(258, 209)
         Me.GroupBox4.TabIndex = 48
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "AES encryption"
+        '
+        'LabelAESWeeks
+        '
+        Me.LabelAESWeeks.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelAESWeeks.Location = New System.Drawing.Point(14, 166)
+        Me.LabelAESWeeks.Name = "LabelAESWeeks"
+        Me.LabelAESWeeks.Size = New System.Drawing.Size(228, 23)
+        Me.LabelAESWeeks.TabIndex = 48
+        Me.LabelAESWeeks.Text = " "
         '
         'LabelEndoflifeDateFrame
         '
         Me.LabelEndoflifeDateFrame.AutoSize = True
         Me.LabelEndoflifeDateFrame.Location = New System.Drawing.Point(142, 35)
         Me.LabelEndoflifeDateFrame.Name = "LabelEndoflifeDateFrame"
-        Me.LabelEndoflifeDateFrame.Size = New System.Drawing.Size(39, 13)
+        Me.LabelEndoflifeDateFrame.Size = New System.Drawing.Size(91, 13)
         Me.LabelEndoflifeDateFrame.TabIndex = 47
-        Me.LabelEndoflifeDateFrame.Text = "Label3"
+        Me.LabelEndoflifeDateFrame.Text = "20101030000000"
         '
         'LabelAESEndoflifeDate
         '
@@ -441,6 +503,13 @@ Partial Class Form1
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.NumericUpDownWeeksC)
+        Me.GroupBox2.Controls.Add(Me.Label13)
+        Me.GroupBox2.Controls.Add(Me.CheckBox_Dynamisch)
+        Me.GroupBox2.Controls.Add(Me.NumericUpDownWeeksB)
+        Me.GroupBox2.Controls.Add(Me.Label15)
+        Me.GroupBox2.Controls.Add(Me.NumericUpDownWeeks)
+        Me.GroupBox2.Controls.Add(Me.Label9)
         Me.GroupBox2.Controls.Add(Me.ListBoxClients)
         Me.GroupBox2.Controls.Add(Me.Label6)
         Me.GroupBox2.Controls.Add(Me.Label5)
@@ -450,17 +519,56 @@ Partial Class Form1
         Me.GroupBox2.Controls.Add(Me.LabelAlarmDate)
         Me.GroupBox2.Location = New System.Drawing.Point(18, 18)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(380, 171)
+        Me.GroupBox2.Size = New System.Drawing.Size(380, 294)
         Me.GroupBox2.TabIndex = 40
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "TAG Life Time"
         '
+        'NumericUpDownWeeksB
+        '
+        Me.NumericUpDownWeeksB.Enabled = False
+        Me.NumericUpDownWeeksB.Location = New System.Drawing.Point(234, 208)
+        Me.NumericUpDownWeeksB.Maximum = New Decimal(New Integer() {300, 0, 0, 0})
+        Me.NumericUpDownWeeksB.Name = "NumericUpDownWeeksB"
+        Me.NumericUpDownWeeksB.Size = New System.Drawing.Size(132, 20)
+        Me.NumericUpDownWeeksB.TabIndex = 48
+        Me.NumericUpDownWeeksB.Value = New Decimal(New Integer() {52, 0, 0, 0})
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(20, 212)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(111, 13)
+        Me.Label15.TabIndex = 47
+        Me.Label15.Text = "Life period in weeks B"
+        '
+        'NumericUpDownWeeks
+        '
+        Me.NumericUpDownWeeks.Enabled = False
+        Me.NumericUpDownWeeks.Location = New System.Drawing.Point(234, 180)
+        Me.NumericUpDownWeeks.Maximum = New Decimal(New Integer() {300, 0, 0, 0})
+        Me.NumericUpDownWeeks.Name = "NumericUpDownWeeks"
+        Me.NumericUpDownWeeks.Size = New System.Drawing.Size(132, 20)
+        Me.NumericUpDownWeeks.TabIndex = 46
+        Me.NumericUpDownWeeks.Value = New Decimal(New Integer() {104, 0, 0, 0})
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(20, 184)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(111, 13)
+        Me.Label9.TabIndex = 45
+        Me.Label9.Text = "Life period in weeks A"
+        '
         'ListBoxClients
         '
+        Me.ListBoxClients.Enabled = False
         Me.ListBoxClients.FormattingEnabled = True
         Me.ListBoxClients.Location = New System.Drawing.Point(234, 31)
         Me.ListBoxClients.Name = "ListBoxClients"
-        Me.ListBoxClients.Size = New System.Drawing.Size(133, 121)
+        Me.ListBoxClients.Size = New System.Drawing.Size(133, 82)
         Me.ListBoxClients.TabIndex = 44
         '
         'Label6
@@ -483,6 +591,7 @@ Partial Class Form1
         '
         'DateTimePickerEndofLife
         '
+        Me.DateTimePickerEndofLife.Enabled = False
         Me.DateTimePickerEndofLife.Format = System.Windows.Forms.DateTimePickerFormat.Time
         Me.DateTimePickerEndofLife.Location = New System.Drawing.Point(141, 57)
         Me.DateTimePickerEndofLife.Name = "DateTimePickerEndofLife"
@@ -491,6 +600,7 @@ Partial Class Form1
         '
         'DateTimePickerAlarm
         '
+        Me.DateTimePickerAlarm.Enabled = False
         Me.DateTimePickerAlarm.Format = System.Windows.Forms.DateTimePickerFormat.Time
         Me.DateTimePickerAlarm.Location = New System.Drawing.Point(141, 31)
         Me.DateTimePickerAlarm.Name = "DateTimePickerAlarm"
@@ -509,7 +619,7 @@ Partial Class Form1
         'LabelAlarmDate
         '
         Me.LabelAlarmDate.AutoSize = True
-        Me.LabelAlarmDate.Location = New System.Drawing.Point(20, 100)
+        Me.LabelAlarmDate.Location = New System.Drawing.Point(22, 97)
         Me.LabelAlarmDate.Name = "LabelAlarmDate"
         Me.LabelAlarmDate.Size = New System.Drawing.Size(82, 13)
         Me.LabelAlarmDate.TabIndex = 29
@@ -529,7 +639,7 @@ Partial Class Form1
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(1141, 371)
+        Me.TabPage2.Size = New System.Drawing.Size(1141, 448)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "rf ID CONTROLER"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -616,11 +726,76 @@ Partial Class Form1
         Me.ReadInputRegistersRTC.Text = "Read Input Registers RTC"
         Me.ReadInputRegistersRTC.UseVisualStyleBackColor = True
         '
+        'CheckBox_Dynamisch
+        '
+        Me.CheckBox_Dynamisch.AutoSize = True
+        Me.CheckBox_Dynamisch.Checked = True
+        Me.CheckBox_Dynamisch.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBox_Dynamisch.Location = New System.Drawing.Point(25, 162)
+        Me.CheckBox_Dynamisch.Name = "CheckBox_Dynamisch"
+        Me.CheckBox_Dynamisch.Size = New System.Drawing.Size(69, 17)
+        Me.CheckBox_Dynamisch.TabIndex = 49
+        Me.CheckBox_Dynamisch.Text = "In weeks"
+        Me.CheckBox_Dynamisch.UseVisualStyleBackColor = True
+        '
+        'NumericUpDownWeeksC
+        '
+        Me.NumericUpDownWeeksC.Location = New System.Drawing.Point(234, 234)
+        Me.NumericUpDownWeeksC.Maximum = New Decimal(New Integer() {300, 0, 0, 0})
+        Me.NumericUpDownWeeksC.Name = "NumericUpDownWeeksC"
+        Me.NumericUpDownWeeksC.Size = New System.Drawing.Size(132, 20)
+        Me.NumericUpDownWeeksC.TabIndex = 51
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(20, 238)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(111, 13)
+        Me.Label13.TabIndex = 50
+        Me.Label13.Text = "Life period in weeks C"
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(6, 106)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(102, 13)
+        Me.Label16.TabIndex = 54
+        Me.Label16.Text = "End of life in weeks "
+        '
+        'LabelWeeksA
+        '
+        Me.LabelWeeksA.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelWeeksA.Location = New System.Drawing.Point(68, 148)
+        Me.LabelWeeksA.Name = "LabelWeeksA"
+        Me.LabelWeeksA.Size = New System.Drawing.Size(63, 22)
+        Me.LabelWeeksA.TabIndex = 55
+        Me.LabelWeeksA.Text = " "
+        '
+        'LabelWeeksB
+        '
+        Me.LabelWeeksB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelWeeksB.Location = New System.Drawing.Point(68, 177)
+        Me.LabelWeeksB.Name = "LabelWeeksB"
+        Me.LabelWeeksB.Size = New System.Drawing.Size(63, 22)
+        Me.LabelWeeksB.TabIndex = 56
+        Me.LabelWeeksB.Text = " "
+        '
+        'LabelWeeksC
+        '
+        Me.LabelWeeksC.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelWeeksC.Location = New System.Drawing.Point(68, 203)
+        Me.LabelWeeksC.Name = "LabelWeeksC"
+        Me.LabelWeeksC.Size = New System.Drawing.Size(63, 22)
+        Me.LabelWeeksC.TabIndex = 57
+        Me.LabelWeeksC.Text = " "
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1164, 490)
+        Me.ClientSize = New System.Drawing.Size(1164, 538)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.LabelTerminal)
@@ -638,8 +813,11 @@ Partial Class Form1
         Me.GroupBox4.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
+        CType(Me.NumericUpDownWeeksB, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumericUpDownWeeks, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
+        CType(Me.NumericUpDownWeeksC, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -697,5 +875,20 @@ Partial Class Form1
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents ButClipboard As System.Windows.Forms.Button
     Friend WithEvents ListBoxClients As System.Windows.Forms.ListBox
+    Friend WithEvents LabelAESWeeks As System.Windows.Forms.Label
+    Friend WithEvents NumericUpDownWeeks As System.Windows.Forms.NumericUpDown
+    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents LabelReg24 As System.Windows.Forms.Label
+    Friend WithEvents Label10 As System.Windows.Forms.Label
+    Friend WithEvents LabelEndoflifeinweeks As System.Windows.Forms.Label
+    Friend WithEvents NumericUpDownWeeksB As System.Windows.Forms.NumericUpDown
+    Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents CheckBox_Dynamisch As System.Windows.Forms.CheckBox
+    Friend WithEvents NumericUpDownWeeksC As System.Windows.Forms.NumericUpDown
+    Friend WithEvents Label13 As System.Windows.Forms.Label
+    Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents LabelWeeksC As System.Windows.Forms.Label
+    Friend WithEvents LabelWeeksB As System.Windows.Forms.Label
+    Friend WithEvents LabelWeeksA As System.Windows.Forms.Label
 
 End Class

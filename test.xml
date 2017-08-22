@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Data>
+<Location>
+  <RoomID>1</RoomID>
+  <Description>You are in room 1</Description>
+  <North>0</North>
+  <East>1</East>
+  <South>0</South>
+  <West>0</West>
+  <Objects>Silver Key</Objects>
+</Location>
+
+<Location>
+  <RoomID>2</RoomID>
+  <Description>You are in room 2</Description>
+  <North>0</North>
+  <East>0</East>
+  <South>1</South>
+  <West>0</West>
+  <Objects>0</Objects>
+</Location>
+
+<Location>
+  <RoomID>3</RoomID>
+  <Description>You are in room 3</Description>
+  <North>0</North>
+  <East>0</East>
+  <South>0</South>
+  <West>1</West>
+  <Objects>Coin</Objects>
+</Location>
+</Data>
+
+

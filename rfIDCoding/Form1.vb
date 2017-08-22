@@ -70,9 +70,9 @@ Public Class Form1
         With DateTimePickerAlarm.Value
             LabelAlarmDateFrame.Text = .Year.ToString + .Month.ToString("00") + .Day.ToString("00") + .Hour.ToString("00") + .Minute.ToString("00") + .Second.ToString("00")
         End With
-        With DateTimePickerEndofLife.Value
-            LabelEndoflifeDateFrame.Text = .Year.ToString + .Month.ToString("00") + .Day.ToString("00") + .Hour.ToString("00") + .Minute.ToString("00") + .Second.ToString("00")
-        End With
+        ' With DateTimePickerEndofLife.Value
+        'LabelEndoflifeDateFrame.Text = .Year.ToString + .Month.ToString("00") + .Day.ToString("00") + .Hour.ToString("00") + .Minute.ToString("00") + .Second.ToString("00")
+        ' End With
         sbMst.SetCOMPort(4, 9600, 8, "N", 1)
         ClientList()
     End Sub
@@ -195,9 +195,16 @@ Public Class Form1
         LabelReg12.Text = ""
         LabelReg16.Text = ""
         LabelReg20.Text = ""
+        LabelReg24.Text = ""
+
 
         LabelAlamDateDecrypted.Text = ""
         LabelEndoflifeDateDecrypted.Text = ""
+        LabelEndoflifeinweeks.Text = ""
+        LabelWeeksA.Text = ""
+        LabelWeeksB.Text = ""
+        LabelWeeksC.Text = ""
+
 
         Application.DoEvents()
 
@@ -214,10 +221,16 @@ Public Class Form1
         If LabelReg16.Text.Length < 10 Then myerror = True
         LabelReg20.Text = RFID("r14")
         If LabelReg20.Text.Length < 10 Then myerror = True
-
+        LabelReg24.Text = RFID("r18")
+        If LabelReg24.Text.Length < 10 Then myerror = True
+       
         If Not myerror Then
             LabelAlamDateDecrypted.Text = timestamp(DoDecryption(LabelReg8.Text))
             LabelEndoflifeDateDecrypted.Text = timestamp(DoDecryption(LabelReg12.Text))
+            LabelEndoflifeinweeks.Text = DoDecryption(LabelReg24.Text)
+            LabelWeeksA.Text = Microsoft.VisualBasic.Mid(LabelEndoflifeinweeks.Text, 11, 4)
+            LabelWeeksB.Text = Microsoft.VisualBasic.Mid(LabelEndoflifeinweeks.Text, 7, 4)
+            LabelWeeksC.Text = Microsoft.VisualBasic.Mid(LabelEndoflifeinweeks.Text, 3, 4)
         End If
 
         Return myerror
@@ -309,6 +322,10 @@ Public Class Form1
     End Sub
 
     Private Sub ButtonR4_Click_1(sender As Object, e As EventArgs) Handles ButtonR4.Click
+        If TextBox1.Text = "" Then
+            MsgBox("Select serial port", MsgBoxStyle.Information)
+            Exit Sub
+        End If
         LabelTerminal.Text = "Reading Tag..."
         If Readregisters() = False Then
 
@@ -321,9 +338,13 @@ Public Class Form1
 
     Private Sub ButtonClearAll_Click_1(sender As Object, e As EventArgs) Handles ButtonClearAll.Click
         Dim i As Integer
-        Dim R(24) As String
+        Dim R(28) As String
         Dim mycom As String
         Dim err As Boolean
+        If TextBox1.Text = "" Then
+            MsgBox("Select serial port", MsgBoxStyle.Information)
+            Exit Sub
+        End If
         LabelTerminal.Text = "Clearing all the registers..."
         LabelTerminal.BackColor = Color.Orange
 
@@ -331,11 +352,11 @@ Public Class Form1
         ProgressBar1.Value = 1
         Application.DoEvents()
         'Reading the registers from 4 to 15 
-        For i = 4 To 24
+        For i = 4 To 28
             If i < 10 Then R(i) = RFID("r0" & i) Else If i <= &HF Then R(i) = RFID("r0" & Chr(i + 55)) Else R(i) = RFID("r" & Hex(i))
             ProgressBar1.Value += 1
         Next
-        For i = 4 To 24
+        For i = 4 To 28
             If i < 10 Then mycom = "w0" & i Else If i <= &HF Then mycom = "w0" & Chr(i + 55) Else mycom = "w" & Hex(i)
             If RFID(mycom & "00000000" & Microsoft.VisualBasic.Right(R(i), 25)) = "00000000" & Microsoft.VisualBasic.Right(R(i), 25) Then err = False Else err = True
             ProgressBar1.Value += 1
@@ -353,16 +374,32 @@ Public Class Form1
 
         ProgressBar1.Visible = False
     End Sub
+    Function FixedLengthString(ByVal value As String, ByVal totalLength As Integer, ByVal padding As Char) As String
+        Dim length = value.Length
+        If (length > totalLength) Then Return value.Substring(0, totalLength)
+        Return value.PadLeft(totalLength, padding)
+    End Function
 
     Private Sub ButtonCodeTag_Click(sender As Object, e As EventArgs) Handles ButtonCodeTag.Click
         Dim LabelRegister As Label() = New Label() {LabelReg4, LabelReg8, LabelReg12}
         Dim i As Integer
 
         Dim mydata As String
+        Dim myWeeks As String
 
-        Dim EncryptionID, EncryptionAlarmdate, EncryptionEndoflife As String
+        Dim EncryptionID, EncryptionAlarmdate, EncryptionEndoflife, EncryptionLifeinweeks, EncryptionLifeinweeksB As String
 
-        Dim R(24) As String
+        Dim R(34) As String
+        Dim lWeeks As Long
+        If TextBox1.Text = "" Then
+            MsgBox("Select serial port", MsgBoxStyle.Information)
+            Exit Sub
+        End If
+
+        If Not Me.CheckBox_Dynamisch.Checked And Me.LabelEndoflifeDateFrame.Text = "20101030000000" Then
+            MsgBox("Select new dates", MsgBoxStyle.Critical)
+            Exit Sub
+        End If
         LabelTerminal.BackColor = Color.Orange
         LabelTerminal.Text = "Writing tag ..."
 
@@ -402,6 +439,14 @@ Public Class Form1
             EncryptionEndoflife = DoEncryption(LabelEndoflifeDateFrame.Text)
             LabelAESEndoflifeDate.Text = EncryptionEndoflife
             ProgressBar1.Value += 1
+            'Life time in weeks data encryption
+
+            lWeeks = NumericUpDownWeeksC.Value * 100000000 + NumericUpDownWeeksB.Value * 10000 + NumericUpDownWeeks.Value
+            myWeeks = FixedLengthString(lWeeks.ToString(), 14, "0")
+            EncryptionLifeinweeks = DoEncryption(myWeeks)
+            LabelAESWeeks.Text = EncryptionLifeinweeks
+
+
 
             Application.DoEvents()
 
@@ -416,7 +461,7 @@ Public Class Form1
                 ProgressBar1.Value += 1
             Next
 
-            For i = 16 To 23
+            For i = 16 To 33
                 If i < 10 Then R(i) = RFID("r0" & i) Else If i <= &HF Then R(i) = RFID("r0" & Chr(i + 55)) Else R(i) = RFID("r" & Hex(i))
             Next
             Application.DoEvents()
@@ -505,6 +550,28 @@ Public Class Form1
                 ProgressBar1.Value += 1
                 i += 1
             Loop While i < 22 And Not myError
+
+            'writing end of life in weeks
+            i = 24
+            Do
+
+                mydata = Microsoft.VisualBasic.Mid(EncryptionLifeinweeks, 1 + ((i - 24) * 8), 8) + Microsoft.VisualBasic.Right(R(i), 25)
+                If i < 10 Then
+                    mycom = "w0" & i
+                Else
+                    If i <= &HF Then
+                        mycom = "w0" & Chr(i + 55)
+                    Else
+                        mycom = "w" & Hex(i)
+                    End If
+                End If
+                If RFID(mycom + mydata) = mydata Then myError = False Else myError = True
+                ProgressBar1.Value += 1
+                i += 1
+            Loop While i < 28 And Not myError
+
+
+
 
 
 
@@ -689,7 +756,7 @@ Public Class Form1
 
     End Sub
 
-     
+
     Private Sub ListBoxClients_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBoxClients.SelectedIndexChanged
 
         Dim newDateLow, newDateHigh As DateTime
@@ -699,8 +766,33 @@ Public Class Form1
 
         DateTimePickerAlarm.Value = New DateTime(newDateLow.Year, newDateLow.Month, newDateLow.Day, 12, 0, 0)
         DateTimePickerEndofLife.Value = New DateTime(newDateHigh.Year, newDateHigh.Month, newDateHigh.Day, 12, 0, 0)
-       
+
         ' Dim mylistClientID, mylistDescription, mylistLow, mylistHigh As New ArrayList
+
+    End Sub
+
+     
+
+    Private Sub CheckBox_Dynamisch_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox_Dynamisch.CheckedChanged
+        If Me.CheckBox_Dynamisch.Checked Then
+
+            Me.LabelEndoflifeDateFrame.Text = "20101030000000"
+            Me.DateTimePickerAlarm.Enabled = False
+            Me.DateTimePickerEndofLife.Enabled = False
+            Me.ListBoxClients.Enabled = False
+        Else
+            Me.DateTimePickerAlarm.Enabled = True
+            Me.DateTimePickerEndofLife.Enabled = True
+            Me.ListBoxClients.Enabled = True
+        End If
+
+    End Sub
+
+    Private Sub NumericUpDownWeeks_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDownWeeks.ValueChanged
+
+    End Sub
+
+    Private Sub TabPage2_Click(sender As Object, e As EventArgs) Handles TabPage2.Click
 
     End Sub
 End Class
